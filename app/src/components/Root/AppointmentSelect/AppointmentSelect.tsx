@@ -1,6 +1,6 @@
 import axios from "axios";
 import styled from "styled-components";
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 
 import Broker from "./Broker";
 
@@ -45,6 +45,9 @@ const AppointmentSelect = () => {
 
 	const [brokerAppointments, setBrokerAppointments] =
 		useState<BrokerAppointments>([]);
+
+	const [selectedAppointmentDetails, setSelectedAppointmentDetails] =
+		useState<Appointment>();
 
 	useEffect(() => {
 		const getBrokers = async () => {
@@ -95,16 +98,34 @@ const AppointmentSelect = () => {
 		<Wrapper>
 			<SideBar>
 				<Heading>Amazing site</Heading>
-				TODO: populate brokers
 				<ul>
 					{brokerAppointments.map((broker) => {
-						return <Broker key={broker.id} broker={broker} />;
+						return (
+							<Broker
+								key={broker.id}
+								broker={broker}
+								setSelectedAppointment={setSelectedAppointmentDetails}
+							/>
+						);
 					})}
 				</ul>
 			</SideBar>
 			<div>
-				<Heading>Appointment details</Heading>
-				TODO: get appointment details when clicking on one from the left side
+				{selectedAppointmentDetails ? (
+					<React.Fragment>
+						<Heading>Appointment details</Heading>
+						Appointment ID: {selectedAppointmentDetails.id}
+						Date: {selectedAppointmentDetails.date}
+						Broker:{" "}
+						{
+							brokers.find(
+								(broker) => broker.id === selectedAppointmentDetails.brokerId
+							)?.name
+						}
+					</React.Fragment>
+				) : (
+					<></>
+				)}
 			</div>
 		</Wrapper>
 	);
