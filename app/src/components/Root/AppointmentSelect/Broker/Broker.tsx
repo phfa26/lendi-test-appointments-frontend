@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Appointment } from "../AppointmentSelect";
+import styled from "styled-components";
 
 export interface BrokerProps {
 	broker: {
@@ -9,6 +10,11 @@ export interface BrokerProps {
 	};
 	setSelectedAppointment: (a: Appointment) => any;
 }
+
+const AppointmentLine = styled.li`
+	display: block;
+	cursor: pointer;
+`;
 
 const Broker = (brokerDetails: BrokerProps) => {
 	const [showAppointments, setShowAppointments] = useState<boolean>(true);
@@ -31,14 +37,14 @@ const Broker = (brokerDetails: BrokerProps) => {
 						<ul>
 							{brokerDetails.broker.appointments.map((appointment) => {
 								return (
-									<li
+									<AppointmentLine
 										key={appointment.id}
 										onClick={() =>
 											brokerDetails.setSelectedAppointment(appointment)
 										}
 									>
-										{appointment.date}
-									</li>
+										- {appointment.date}
+									</AppointmentLine>
 								);
 							})}
 						</ul>
