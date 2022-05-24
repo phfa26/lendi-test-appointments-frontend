@@ -17,6 +17,10 @@ const Heading = styled.strong.attrs({ role: "heading", level: 2 })`
 	font-size: 20px;
 `;
 
+const AppointmentLine = styled.div`
+	display: block;
+`;
+
 export interface Appointment {
 	id: number;
 	brokerId: number;
@@ -47,7 +51,7 @@ const AppointmentSelect = () => {
 		useState<BrokerAppointments>([]);
 
 	const [selectedAppointmentDetails, setSelectedAppointmentDetails] =
-		useState<Appointment>();
+		useState<Appointment | null>();
 
 	useEffect(() => {
 		const getBrokers = async () => {
@@ -114,14 +118,28 @@ const AppointmentSelect = () => {
 				{selectedAppointmentDetails ? (
 					<React.Fragment>
 						<Heading>Appointment details</Heading>
-						Appointment ID: {selectedAppointmentDetails.id}
-						Date: {selectedAppointmentDetails.date}
-						Broker:{" "}
-						{
-							brokers.find(
-								(broker) => broker.id === selectedAppointmentDetails.brokerId
-							)?.name
-						}
+						<AppointmentLine>
+							{" "}
+							Appointment ID: {selectedAppointmentDetails.id}
+						</AppointmentLine>
+						<AppointmentLine>
+							{" "}
+							Date: {selectedAppointmentDetails.date}
+						</AppointmentLine>
+						<AppointmentLine>
+							{" "}
+							Broker:{" "}
+							{
+								brokers.find(
+									(broker) => broker.id === selectedAppointmentDetails.brokerId
+								)?.name
+							}
+						</AppointmentLine>
+						<AppointmentLine>
+							<button onClick={() => setSelectedAppointmentDetails(null)}>
+								Close
+							</button>
+						</AppointmentLine>
 					</React.Fragment>
 				) : (
 					<></>
