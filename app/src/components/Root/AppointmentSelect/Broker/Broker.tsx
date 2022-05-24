@@ -36,6 +36,8 @@ const Broker = (brokerDetails: BrokerProps) => {
 					{showAppointments ? (
 						<ul>
 							{brokerDetails.broker.appointments.map((appointment) => {
+								if (brokerDetails.broker?.name)
+									appointment.brokerName = brokerDetails.broker.name;
 								return (
 									<AppointmentLine
 										key={appointment.id}

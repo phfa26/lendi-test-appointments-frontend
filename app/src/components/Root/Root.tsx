@@ -33,7 +33,7 @@ const Root = () => {
 
 	return (
 		<Wrapper>
-			<Navigation />
+			<Navigation selectedAppointmentDetails={selectedAppointmentDetails} />
 			<Content>
 				<Heading>Amazing site</Heading>
 				<AppointmentSelect

@@ -1,25 +1,32 @@
 import React from "react";
 import styled from "styled-components";
+import { Appointment } from "../AppointmentSelect/AppointmentSelect";
 
 const Wrapper = styled.div`
-  background-color: #e7e7e7;
-  display: flex;
-  font-size: 20px;
-  justify-content: space-between;
-  padding: 24px 48px;
-  box-shadow: 1px 1px 1px #b8b8b8;
-  margin-bottom: 48px;
+	background-color: #e7e7e7;
+	display: flex;
+	font-size: 20px;
+	justify-content: space-between;
+	padding: 24px 48px;
+	box-shadow: 1px 1px 1px #b8b8b8;
+	margin-bottom: 48px;
 `;
 
-const Navigation = () => {
-  return (
-    <Wrapper>
-      <strong>
-        Currently selected appointment: [appointment date] with [broker name]
-      </strong>
-      <strong>Welcome to Lendi</strong>
-    </Wrapper>
-  );
+interface NavigationProps {
+	selectedAppointmentDetails: Appointment | null;
+}
+
+const Navigation = (NavigationDetails: NavigationProps) => {
+	return (
+		<Wrapper>
+			<strong>
+				{!!NavigationDetails.selectedAppointmentDetails
+					? `Currently selected appointment: ${NavigationDetails.selectedAppointmentDetails.date} with ${NavigationDetails.selectedAppointmentDetails.brokerName}`
+					: "Please select an appointment for details"}
+			</strong>
+			<strong>Welcome to Lendi</strong>
+		</Wrapper>
+	);
 };
 
 export default Navigation;

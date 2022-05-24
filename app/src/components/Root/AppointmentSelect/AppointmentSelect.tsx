@@ -37,10 +37,11 @@ interface BrokerAppointment {
 export interface Appointment {
 	id: number;
 	brokerId: number;
-	date: string;
+  date: string;
+  brokerName?: string;
 }
 
-export interface AppointmentSelectProps {
+interface AppointmentSelectProps {
 	selectedAppointmentDetails: Appointment | null;
 	setSelectedAppointmentDetails: (a: Appointment | null) => void;
 }
@@ -98,7 +99,7 @@ const AppointmentSelect = (
 				};
 				loadedBrokerAppointments.push(brokerAppointment);
 			});
-			setBrokerAppointments([...loadedBrokerAppointments]);
+      setBrokerAppointments([...loadedBrokerAppointments]);
 		}
 	}, [brokers, appointments]);
 
