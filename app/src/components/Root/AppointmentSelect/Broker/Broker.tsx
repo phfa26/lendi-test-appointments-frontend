@@ -30,7 +30,12 @@ const Broker = (brokerDetails: BrokerProps) => {
 			{brokerDetails.broker.appointments.length ? (
 				<React.Fragment>
 					appointments:
-					<button onClick={toggleShowAppointment}>
+					<button
+						onClick={toggleShowAppointment}
+						data-testid={`broker-${
+							showAppointments ? "hide" : "show"
+						}-appointments-button`}
+					>
 						{showAppointments ? "Hide" : "Show"} appointments
 					</button>
 					{showAppointments ? (
