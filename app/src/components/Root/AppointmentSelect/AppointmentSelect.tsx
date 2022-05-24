@@ -17,36 +17,43 @@ const Heading = styled.strong.attrs({ role: "heading", level: 2 })`
 	font-size: 20px;
 `;
 
-interface Appointment {
+export interface Appointment {
 	id: number;
 	brokerId: number;
 	date: string;
 }
 
-interface Broker {
+interface BrokerDetails {
 	id: number;
 	name: string;
 }
 
-type BrokerAppointments = {
-	id: Broker["id"];
-	name: Broker["name"];
+interface BrokerAppointment {
+	id: BrokerDetails["id"];
+	name: BrokerDetails["name"];
 	appointments: Appointment[];
-}[];
+}
+
+type BrokerAppointments = BrokerAppointment[];
 
 const AppointmentSelect = () => {
 	const [loadingBrokers, setLoadingBrokers] = useState(true);
-	const [brokers, setBrokers] = useState([]);
+	const [brokers, setBrokers] = useState<BrokerDetails[]>([]);
 
 	const [loadingAppointments, setLoadingAppointments] = useState(true);
 	const [appointments, setAppointments] = useState<Appointment[]>([]);
 
+	const [brokerAppointments, setBrokerAppointments] =
+		useState<BrokerAppointments>([]);
+
 	useEffect(() => {
 		const getBrokers = async () => {
-			await axios.get("http://localhost:8080/brokers").then(({ data }) => {
-				setBrokers(data);
-				setLoadingBrokers(false);
-			});
+			await axios
+				.get<BrokerDetails[]>("http://localhost:8080/brokers")
+				.then(({ data }) => {
+					setBrokers(data);
+					setLoadingBrokers(false);
+				});
 		};
 		if (loadingBrokers) {
 			getBrokers();
@@ -67,6 +74,22 @@ const AppointmentSelect = () => {
 		}
 	}, [loadingAppointments]);
 
+	useEffect(() => {
+		let loadedBrokerAppointments: BrokerAppointment[] = [];
+		if (brokers.length && appointments.length) {
+			brokers.forEach((broker) => {
+				let brokerAppointment: BrokerAppointment = {
+					id: broker.id,
+					name: broker.name,
+					appointments: appointments.filter(
+						(appointment) => appointment.brokerId === broker.id
+					),
+				};
+				loadedBrokerAppointments.push(brokerAppointment);
+			});
+			setBrokerAppointments([...loadedBrokerAppointments]);
+		}
+	}, [brokers, appointments]);
 
 	return (
 		<Wrapper>
@@ -74,9 +97,9 @@ const AppointmentSelect = () => {
 				<Heading>Amazing site</Heading>
 				TODO: populate brokers
 				<ul>
-					{/* {brokerAppointments.map((broker) => (
-            <Broker key={broker.id} broker={broker} />
-          ))} */}
+					{brokerAppointments.map((broker) => {
+						return <Broker key={broker.id} broker={broker} />;
+					})}
 				</ul>
 			</SideBar>
 			<div>
