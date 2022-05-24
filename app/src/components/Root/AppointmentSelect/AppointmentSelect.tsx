@@ -21,11 +21,7 @@ const AppointmentLine = styled.div`
 	display: block;
 `;
 
-export interface Appointment {
-	id: number;
-	brokerId: number;
-	date: string;
-}
+type BrokerAppointments = BrokerAppointment[];
 
 interface BrokerDetails {
 	id: number;
@@ -38,9 +34,20 @@ interface BrokerAppointment {
 	appointments: Appointment[];
 }
 
-type BrokerAppointments = BrokerAppointment[];
+export interface Appointment {
+	id: number;
+	brokerId: number;
+	date: string;
+}
 
-const AppointmentSelect = () => {
+export interface AppointmentSelectProps {
+	selectedAppointmentDetails: Appointment | null;
+	setSelectedAppointmentDetails: (a: Appointment | null) => void;
+}
+
+const AppointmentSelect = (
+	appointmentSelectDetails: AppointmentSelectProps
+) => {
 	const [loadingBrokers, setLoadingBrokers] = useState(true);
 	const [brokers, setBrokers] = useState<BrokerDetails[]>([]);
 
@@ -49,9 +56,6 @@ const AppointmentSelect = () => {
 
 	const [brokerAppointments, setBrokerAppointments] =
 		useState<BrokerAppointments>([]);
-
-	const [selectedAppointmentDetails, setSelectedAppointmentDetails] =
-		useState<Appointment | null>();
 
 	useEffect(() => {
 		const getBrokers = async () => {
@@ -108,35 +112,45 @@ const AppointmentSelect = () => {
 							<Broker
 								key={broker.id}
 								broker={broker}
-								setSelectedAppointment={setSelectedAppointmentDetails}
+								setSelectedAppointment={
+									appointmentSelectDetails.setSelectedAppointmentDetails
+								}
 							/>
 						);
 					})}
 				</ul>
 			</SideBar>
 			<div>
-				{selectedAppointmentDetails ? (
+				{appointmentSelectDetails.selectedAppointmentDetails ? (
 					<React.Fragment>
 						<Heading>Appointment details</Heading>
 						<AppointmentLine>
 							{" "}
-							Appointment ID: {selectedAppointmentDetails.id}
+							Appointment ID:{" "}
+							{appointmentSelectDetails.selectedAppointmentDetails.id}
 						</AppointmentLine>
 						<AppointmentLine>
 							{" "}
-							Date: {selectedAppointmentDetails.date}
+							Date: {appointmentSelectDetails.selectedAppointmentDetails.date}
 						</AppointmentLine>
 						<AppointmentLine>
 							{" "}
 							Broker:{" "}
 							{
 								brokers.find(
-									(broker) => broker.id === selectedAppointmentDetails.brokerId
+									(broker) =>
+										broker.id ===
+										appointmentSelectDetails.selectedAppointmentDetails
+											?.brokerId
 								)?.name
 							}
 						</AppointmentLine>
 						<AppointmentLine>
-							<button onClick={() => setSelectedAppointmentDetails(null)}>
+							<button
+								onClick={() =>
+									appointmentSelectDetails.setSelectedAppointmentDetails(null)
+								}
+							>
 								Close
 							</button>
 						</AppointmentLine>
