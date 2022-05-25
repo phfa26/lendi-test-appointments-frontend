@@ -17,6 +17,7 @@ describe("Broker Component", () => {
 				setSelectedAppointment={function (a: Appointment) {
 					throw new Error("Function not implemented.");
 				}}
+				testEnv={true}
 			/>
 		);
 
@@ -30,3 +31,8 @@ describe("Broker Component", () => {
 		const appointmentsList = screen.getByTestId("broker-appointments-list");
 	});
 });
+
+/* 
+	Sorry, but I am having a hard time figuring out how to simulate the click and change the test ID. 
+	I will get back to it as soon as I have more time available.
+*/

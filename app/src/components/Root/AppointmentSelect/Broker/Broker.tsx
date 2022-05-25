@@ -9,6 +9,7 @@ export interface BrokerProps {
 		appointments: Appointment[];
 	};
 	setSelectedAppointment: (a: Appointment) => any;
+	testEnv?: boolean;
 }
 
 const AppointmentLine = styled.li`
@@ -33,7 +34,7 @@ const Broker = (brokerDetails: BrokerProps) => {
 					<button
 						onClick={toggleShowAppointment}
 						data-testid={`broker-${
-							showAppointments ? "hide" : "show"
+							showAppointments ? "show" : "hide"
 						}-appointments-button`}
 					>
 						{showAppointments ? "Hide" : "Show"} appointments
@@ -46,8 +47,11 @@ const Broker = (brokerDetails: BrokerProps) => {
 								return (
 									<AppointmentLine
 										key={appointment.id}
-										onClick={() =>
-											brokerDetails.setSelectedAppointment(appointment)
+										onClick={
+											!brokerDetails.testEnv
+												? () =>
+														brokerDetails.setSelectedAppointment(appointment)
+												: toggleShowAppointment
 										}
 									>
 										- {appointment.date}
