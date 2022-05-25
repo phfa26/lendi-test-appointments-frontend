@@ -35,7 +35,7 @@ const Root = () => {
 		<Wrapper>
 			<Navigation selectedAppointmentDetails={selectedAppointmentDetails} />
 			<Content>
-				<Heading>Amazing site</Heading>
+				<Heading>Broker appointments manager</Heading>
 				<AppointmentSelect
 					selectedAppointmentDetails={selectedAppointmentDetails}
 					setSelectedAppointmentDetails={setSelectedAppointmentDetails}

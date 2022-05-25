@@ -15,6 +15,22 @@ export interface BrokerProps {
 const AppointmentLine = styled.li`
 	display: block;
 	cursor: pointer;
+	margin: 0.2em 0;
+`;
+
+const BrokerBlock = styled.li`
+	display: block;
+	margin: 1em;
+`;
+
+const Line = styled.div`
+	margin: 0.2em 0;
+`;
+
+const Alert = styled.span`
+	font-weight: bold;
+	color: red;
+	white-space: nowrap;
 `;
 
 const Broker = (brokerDetails: BrokerProps) => {
@@ -25,20 +41,21 @@ const Broker = (brokerDetails: BrokerProps) => {
 	};
 
 	return (
-		<li>
-			Broker: {brokerDetails.broker.name}
-			<br />
+		<BrokerBlock>
+			<Line>Broker: {brokerDetails.broker.name}</Line>
 			{brokerDetails.broker.appointments.length ? (
 				<React.Fragment>
-					appointments:
-					<button
-						onClick={toggleShowAppointment}
-						data-testid={`broker-${
-							showAppointments ? "show" : "hide"
-						}-appointments-button`}
-					>
-						{showAppointments ? "Hide" : "Show"} appointments
-					</button>
+					<Line>appointments:</Line>
+					<Line>
+						<button
+							onClick={toggleShowAppointment}
+							data-testid={`broker-${
+								showAppointments ? "show" : "hide"
+							}-appointments-button`}
+						>
+							{showAppointments ? "Hide" : "Show"} appointments
+						</button>
+					</Line>
 					{showAppointments ? (
 						<ul>
 							{brokerDetails.broker.appointments.map((appointment) => {
@@ -64,9 +81,9 @@ const Broker = (brokerDetails: BrokerProps) => {
 					)}
 				</React.Fragment>
 			) : (
-				<span>No scheduled appointments</span>
+				<Alert>No scheduled appointments</Alert>
 			)}
-		</li>
+		</BrokerBlock>
 	);
 };
 
