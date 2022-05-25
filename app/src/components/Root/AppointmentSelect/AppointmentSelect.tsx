@@ -12,6 +12,10 @@ const SideBar = styled.div`
 	width: 250px;
 `;
 
+const AppointmentDetailsContainer = styled.div`
+	margin-left: 3em;
+`;
+
 const Heading = styled.strong.attrs({ role: "heading", level: 2 })`
 	display: block;
 	font-size: 20px;
@@ -19,6 +23,7 @@ const Heading = styled.strong.attrs({ role: "heading", level: 2 })`
 
 const AppointmentLine = styled.div`
 	display: block;
+	margin: 0.2em 0;
 `;
 
 type BrokerAppointments = BrokerAppointment[];
@@ -121,7 +126,7 @@ const AppointmentSelect = (
 					})}
 				</ul>
 			</SideBar>
-			<div>
+			<AppointmentDetailsContainer>
 				{appointmentSelectDetails.selectedAppointmentDetails ? (
 					<React.Fragment>
 						<Heading>Appointment details</Heading>
@@ -157,9 +162,9 @@ const AppointmentSelect = (
 						</AppointmentLine>
 					</React.Fragment>
 				) : (
-					<></>
+					<Heading>Select an appointment for details</Heading>
 				)}
-			</div>
+			</AppointmentDetailsContainer>
 		</Wrapper>
 	);
 };
