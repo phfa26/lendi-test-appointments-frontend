@@ -24,7 +24,7 @@ const Navigation = (NavigationDetails: NavigationProps) => {
 					? `Currently selected appointment: ${NavigationDetails.selectedAppointmentDetails.date} with ${NavigationDetails.selectedAppointmentDetails.brokerName}`
 					: "Please select an appointment for details"}
 			</strong>
-			<strong>Welcome to Lendi</strong>
+			<strong>Welcome to the Lendi Team, Paulo!</strong>
 		</Wrapper>
 	);
 };
